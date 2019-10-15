@@ -3,10 +3,12 @@ from dataclasses import dataclass, field
 from datetime import datetime
 from typing import List
 
+from dataclasses_json import dataclass_json
+
 
 @dataclass
 class Address:
-    """ A physical adress """
+    """ A physical address """
     street: str
     postal_code: int
     district: str
@@ -28,11 +30,13 @@ class Show:
     times: List[datetime] = field(default_factory=list)
 
 
+@dataclass_json
+@dataclass
 class Cinema:
     """ A cinema with shows """
     name: str
-    description: str
-    address: Address
-    contact: Contact
-    prices: List[str]
-    shows: List[Show]
+    description: str = ''
+    address: Address = field(default_factory=Address)
+    contact: Contact = field(default_factory=Contact)
+    prices: List[str] = field(default_factory=list)
+    shows: List[Show] = field(default_factory=list)

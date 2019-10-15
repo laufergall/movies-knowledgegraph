@@ -8,6 +8,7 @@ from .data_structures import Cinema, Address, Contact, Show
 
 
 class KinoSpider(scrapy.Spider):
+    
     name = 'kinoprogramm'
     start_urls = ['https://www.berlin.de/kino/_bin/azfilm.php']
 
@@ -39,7 +40,7 @@ class KinoSpider(scrapy.Spider):
             shows.append(show)
         return shows
 
-    def parse(self, response):
+    def parse(self, response: scrapy.http.response.html.HtmlResponse):
 
         selectors = response.xpath('//div[@class="controls"]/select/option')
 
@@ -49,30 +50,24 @@ class KinoSpider(scrapy.Spider):
         for href in hrefs:
             yield response.follow(href, self.parse_cinema)
 
-    def parse_cinema(self, response):
+    def parse_cinema(self, response: scrapy.http.response.html.HtmlResponse) -> dict:
 
         titles = response.css('button.accordion-trigger::text').getall()
         movies_times = [div.xpath('//table//td/text()').getall()
                         for div in response.css('div.table-responsive-wrapper')]
 
-        cinema = Cinema()
-        cinema.name = response.css('h1.top::text').get()
-        cinema.description = response.xpath('//div[@class="kinodetail echo"]/p/text()').get()
-        """
-        cinema.address = Address(street=response.xpath('//span[@class="street-address"]/text()').get(),
-                                 postal_code=response.xpath('//span[@class="postal-code"]/text()').get(),
-                                 district=response.xpath('//span[@class="locality"]/text()').get(),
-                                 city='Berlin',
-                                 country='Germany')
-        
-        cinema.contact = Contact(telephone=response.xpath(
-            '//span[contains(text(), "Telefon")]/following-sibling::span/text()').get())
-        """
+        cinema = Cinema(
+            name=response.css('h1.top::text').get(),
+            description=response.xpath('//div[@class="kinodetail echo"]/p/text()').get(),
+            address=Address(street=response.xpath('//span[@class="street-address"]/text()').get(),
+                            postal_code=response.xpath('//span[@class="postal-code"]/text()').get(),
+                            district=response.xpath('//span[@class="locality"]/text()').get(),
+                            city='Berlin',
+                            country='Germany'),
+            contact=Contact(telephone=response.xpath(
+                '//span[contains(text(), "Telefon")]/following-sibling::span/text()').get()),
+            prices=response.xpath('//section[@class="infoblock oeffnungszeiten"]/div/*/text()').getall(),
+            shows=self.create_shows(titles, movies_times)
+        )
 
-        cinema.prices = response.xpath('//section[@class="infoblock oeffnungszeiten"]/div/*/text()').getall()
-
-        """
-        cinema.shows = self.create_shows(titles, movies_times)
-        """
-
-        yield cinema.__dict__
+        yield cinema.to_dict()
