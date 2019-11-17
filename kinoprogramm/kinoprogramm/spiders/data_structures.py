@@ -10,7 +10,7 @@ from dataclasses_json import dataclass_json
 class Address:
     """ A physical address """
     street: str
-    postal_code: int
+    postal_code: str
     district: str
     city: str
     country: str
