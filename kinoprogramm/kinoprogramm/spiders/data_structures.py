@@ -1,3 +1,6 @@
+"""
+Data Stuctures for cinemas and their attributes
+"""
 
 from dataclasses import dataclass, field
 from datetime import datetime

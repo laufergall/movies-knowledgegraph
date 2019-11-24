@@ -1,4 +1,7 @@
-import locale
+"""
+Definition of spyder to retrieve Cinema instances
+"""
+
 from datetime import datetime
 from typing import List
 from .utils import strip_text, is_positiveinteger
@@ -16,16 +19,15 @@ class KinoSpider(scrapy.Spider):
     @staticmethod
     def create_shows(titles: List[str], movies_times: List[List[str]]) -> List[Show]:
 
-        # in order to be able to parse weekdays
-        locale.setlocale(locale.LC_TIME, 'de_DE')
-
         shows = list()
         for title, movie_times in zip(titles, movies_times):
             show = Show(title=title)
             for show_day, show_times in zip(*[iter(movie_times)] * 2):
                 for show_time in show_times.split(','):
-                    show.times.append(datetime.strptime(show_day + show_time,
-                                                        '%a, %d.%m.%y: %H:%M'))
+                    # remove weekday
+                    show_day_ = show_day.split(', ')[1]
+                    show.times.append(datetime.strptime(show_day_ + show_time,
+                                                        '%d.%m.%y: %H:%M'))
             shows.append(show)
         return shows
 
