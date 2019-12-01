@@ -13,6 +13,9 @@ def strip_text(func: Callable) -> Callable:
     def wrapper(*args, **kwargs):
         res = func(*args, **kwargs)
 
+        if res is None:
+            return None
+
         if type(res) is not list:
             return res.replace('\n', '').strip()
 
