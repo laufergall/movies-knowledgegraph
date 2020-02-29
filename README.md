@@ -1,14 +1,14 @@
-# movies-knowledgegraph
+# This repo
 
 (ongoing work)
 
 I am constructing a knowledge graph of movies shown in Berlin cinemas.
 
-## Data 
+# Data 
 
 We retrieve currently showing movies from [Berlin.de](https://www.berlin.de/kino/_bin/azfilm.php) using [scrapy](https://docs.scrapy.org/en/latest/).
 
-## Retrieve cinema movies
+# Retrieve cinema movies
 
 ```bash
 cd kinoprogramm
@@ -24,7 +24,7 @@ scrapy crawl kinoprogramm -o ../data/kinoprogramm.json
 
 Data will be written to the file specified with the `-o` parameter.
 
-## Deployment
+# Deployment
 
 To deploy to the [Scrapy Cloud](https://scrapinghub.com/scrapy-cloud):
 
@@ -56,4 +56,12 @@ curl -u <API_KEY>: https://storage.scrapinghub.com/items/:<PROJECT_ID>[/<SPIDER_
 Example retrieving contact from first cinema (item 0) of spyder 1 job 6 and project id 417389:
 ```bash
 curl -u <API_KEY>: https://storage.scrapinghub.com/items/417389/1/6/0/contact
+```
+
+# Tests
+
+After installing `requirements_tests.txt`, tests can be run by:
+
+```shell
+python -m pytest tests/
 ```
