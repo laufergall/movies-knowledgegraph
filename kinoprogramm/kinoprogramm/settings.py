@@ -67,6 +67,17 @@ ROBOTSTXT_OBEY = True
 #ITEM_PIPELINES = {
 #    'kinoprogramm.pipelines.KinoprogrammPipeline': 300,
 #}
+ITEM_PIPELINES = {
+    'kinoprogramm.pipelines.MongoDBPipeline': 300,
+}
+
+MONGODB_HOST = '192.168.99.100'
+MONGODB_PORT = 27017
+MONGODB_USERNAME = 'root'
+MONGODB_PASSWORD = '12345'
+MONGODB_DB = 'kinoprogramm'
+MONGODB_COLLECTION = 'kinos'
+
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html

@@ -10,6 +10,8 @@ We retrieve currently showing movies from [Berlin.de](https://www.berlin.de/kino
 
 # Retrieve cinema movies
 
+## write to json file
+
 ```bash
 cd kinoprogramm
 ```
@@ -23,6 +25,37 @@ scrapy crawl kinoprogramm -o ../data/kinoprogramm.json
 ```
 
 Data will be written to the file specified with the `-o` parameter.
+
+## write to MongoDB database
+
+Start two containers, one with [MongoDB](https://www.mongodb.com/) and another one with [Nosqlclient](https://github.com/nosqlclient/nosqlclient) (formerly mongoclient) by:
+
+```bash
+docker-compose build
+docker-compose up
+```
+
+Retrieve showing cinema movies (the specified pipeline will insert the data into MongoDB): 
+
+```bash
+scrapy crawl kinoprogramm
+```
+
+Open the mongo client on `http://localhost:3300/` and connect to MongoDB by:
+1. Click on "Connect" (up-right corner).
+2. Click on "Edit" the default connection.
+3. Clear connection url. Under the "Connection" tab, Database Name: `kinoprogramm`.
+4. On tab "Authentication", `Scram-Sha-1` as Authentication Type, Username: `root`, Password: `12345`, Authentication DB: leave empty.
+5. Click on "Save", and click on "Connect".
+
+See stored data under "Collections" -> "kinos".
+
+Go to "Tools" -> "Shell" to write [mongodb queries](https://docs.mongodb.com/manual/tutorial/query-documents/) such as: 
+
+```shell
+db.kinos.distinct( "shows.title" )
+```
+
 
 # Deployment
 
