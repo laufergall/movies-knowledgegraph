@@ -33,7 +33,7 @@ services:
     depends_on:
       - mongodb
     environment:
-      MONGODB_HOST: '192.168.99.100'
+      MONGODB_HOST: mongodb
       MONGODB_PORT: 27017
       MONGODB_USERNAME: root
       MONGODB_PASSWORD: 12345

@@ -6,6 +6,6 @@ COPY requirements.txt /app
 RUN pip install --upgrade pip &&\
     pip install --trusted-host pypi.python.org -r requirements.txt
 COPY scrape.py /app/
-COPY ./kinoprogramm/ /app/kinoprogramm/
+COPY . /app/
 
 CMD [ "python", "scrape.py" ]

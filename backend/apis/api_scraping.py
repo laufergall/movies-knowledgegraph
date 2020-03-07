@@ -8,12 +8,12 @@ api = Namespace('scraping',
                 description='Retrieve cinema program.')
 
 
-@api.route('/berlin')
-class Endpoint1(Resource):
+@api.route('/movies')
+class Movies(Resource):
 
     def get(self):
         """
-        docstr GET
+        Retrieve movies in Berlin cinemas
         """
 
-        return 'Hello - minimal flask restplus'
+        return 'TODO'

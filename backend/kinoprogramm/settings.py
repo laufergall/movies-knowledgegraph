@@ -9,11 +9,12 @@
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
+import os
+
 BOT_NAME = 'kinoprogramm'
 
 SPIDER_MODULES = ['kinoprogramm.spiders']
 NEWSPIDER_MODULE = 'kinoprogramm.spiders'
-
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'kinoprogramm (+http://www.yourdomain.com)'
@@ -71,12 +72,12 @@ ITEM_PIPELINES = {
     'kinoprogramm.pipelines.MongoDBPipeline': 300,
 }
 
-MONGODB_HOST = '192.168.99.100'
-MONGODB_PORT = 27017
-MONGODB_USERNAME = 'root'
-MONGODB_PASSWORD = '12345'
-MONGODB_DB = 'kinoprogramm'
-MONGODB_COLLECTION = 'kinos'
+MONGODB_HOST = os.environ.get('MONGODB_HOST')
+MONGODB_PORT = int(os.environ.get('MONGODB_PORT'))
+MONGODB_USERNAME = os.environ.get('MONGODB_USERNAME')
+MONGODB_PASSWORD = os.environ.get('MONGODB_PASSWORD')
+MONGODB_DB = os.environ.get('MONGODB_DB')
+MONGODB_COLLECTION = os.environ.get('MONGODB_COLLECTION')
 
 
 # Enable and configure the AutoThrottle extension (disabled by default)
