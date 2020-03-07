@@ -2,14 +2,8 @@ version: '3'
 
 services:
 
-  backend:
-    build: ./backend/
-    container_name: backend
-    ports:
-      - 8001:8001
-
   mongodb:
-    build: ./mongo/
+    build: ./mongo
     container_name: mongodb
     restart: always
     ports:
@@ -22,3 +16,26 @@ services:
       - mongodb
     ports:
       - 3300:3000
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile-api
+    container_name: backend
+    ports:
+      - 8001:8001
+
+  scrapy:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile-scrapy
+    container_name: scrapy
+    depends_on:
+      - mongodb
+    environment:
+      MONGODB_HOST: '192.168.99.100'
+      MONGODB_PORT: 27017
+      MONGODB_USERNAME: root
+      MONGODB_PASSWORD: 12345
+      MONGODB_DB: kinoprogramm
+      MONGODB_COLLECTION:  kinos
