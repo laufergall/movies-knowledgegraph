@@ -10,6 +10,6 @@ COPY ./apis/ /app/apis/
 
 RUN chmod 644 main.py
 
-EXPOSE 8399
+EXPOSE 8001
 
 CMD ["python", "main.py"]

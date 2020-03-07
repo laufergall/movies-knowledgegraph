@@ -10,7 +10,11 @@ We retrieve currently showing movies from [Berlin.de](https://www.berlin.de/kino
 
 # Retrieve cinema movies
 
-Start two containers, one with [MongoDB](https://www.mongodb.com/) and another one with [Nosqlclient](https://github.com/nosqlclient/nosqlclient) (formerly mongoclient) by:
+Start three containers:
+
+* our flask-restplus backend
+* a [MongoDB](https://www.mongodb.com/) database
+* the [Nosqlclient](https://github.com/nosqlclient/nosqlclient) (formerly mongoclient)
 
 ```bash
 docker-compose build

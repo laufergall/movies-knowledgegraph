@@ -2,6 +2,12 @@ version: '3'
 
 services:
 
+  backend:
+    build: ./backend/
+    container_name: backend
+    ports:
+      - 8001:8001
+
   mongodb:
     build: ./mongo/
     container_name: mongodb
