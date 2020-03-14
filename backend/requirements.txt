@@ -1,0 +1,4 @@
+dataclasses-json==0.3.4
+flask-restplus==0.13.0
+pymongo==3.10.1
+werkzeug==0.16.1

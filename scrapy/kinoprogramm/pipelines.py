@@ -5,11 +5,11 @@
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 
-import pymongo
-import os
-from scrapy.utils.project import get_project_settings
-from scrapy.exceptions import DropItem
 import logging
+
+import pymongo
+from scrapy.exceptions import DropItem
+from scrapy.utils.project import get_project_settings
 
 
 class KinoprogrammPipeline(object):
@@ -22,11 +22,6 @@ class MongoDBPipeline(object):
     def __init__(self):
 
         logger = logging.getLogger('MongoDBPipeline')
-        logger.setLevel(logging.DEBUG)
-        ch = logging.FileHandler(os.path.join('..', 'data', 'logs', 'MongoDBPipeline.log'))
-        formatter = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
-        ch.setFormatter(formatter)
-        logger.addHandler(ch)
         self.logger = logger
 
         settings = get_project_settings()
@@ -47,6 +42,6 @@ class MongoDBPipeline(object):
                 raise DropItem(f'Missing {data}!')
 
         self.collection.insert(dict(item))
-        self.logger.debug(f'item {item["name"]} from spyder {spider.name} added to MongoDB')
+        self.logger.info(f'item {item["name"]} from spyder {spider.name} added to MongoDB')
 
         return item

@@ -2,13 +2,17 @@
 Definition of spyder to retrieve Cinema instances
 """
 
+import logging
 from datetime import datetime
 from typing import List
-from .utils import strip_text, is_positiveinteger
 
 import scrapy
 
 from .data_structures import Cinema, Address, Contact, Show
+from .utils import strip_text, is_positiveinteger
+
+
+logger = logging.getLogger('KinoSpider')
 
 
 class KinoSpider(scrapy.Spider):
@@ -39,6 +43,7 @@ class KinoSpider(scrapy.Spider):
                  for sel in selectors if is_positiveinteger(sel.attrib['value'])]
 
         for href in hrefs:
+            self.logger.info(f'Scraping: {href}')
             yield response.follow(href, self.parse_cinema)
 
     @strip_text
@@ -102,5 +107,7 @@ class KinoSpider(scrapy.Spider):
 
             shows=self.create_shows(titles, movies_times)
         )
+
+        self.logger.info(f'Scraped cinema: {cinema.name}')
 
         yield cinema.to_dict()

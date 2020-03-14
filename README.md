@@ -10,34 +10,25 @@ We retrieve currently showing movies from [Berlin.de](https://www.berlin.de/kino
 
 # Retrieve cinema movies
 
-## write to json file
+Start three containers:
 
-```bash
-cd kinoprogramm
-```
-
-You need Python 3.7.4 and [requirements.txt](kinoprogramm/requirements.txt).
-
-You can start the spider to retrieve currently showing cinema movies by just:
-
-```bash
-scrapy crawl kinoprogramm -o ../data/kinoprogramm.json
-```
-
-Data will be written to the file specified with the `-o` parameter.
-
-## write to MongoDB database
-
-Start two containers, one with [MongoDB](https://www.mongodb.com/) and another one with [Nosqlclient](https://github.com/nosqlclient/nosqlclient) (formerly mongoclient) by:
+* our flask-restplus backend
+* a [MongoDB](https://www.mongodb.com/) database
+* the [Nosqlclient](https://github.com/nosqlclient/nosqlclient) (formerly mongoclient)
 
 ```bash
 docker-compose build
 docker-compose up
 ```
 
-Retrieve showing cinema movies (the specified pipeline will insert the data into MongoDB): 
+There are two alternatives for storing data: 1) write to MongoDB database, or 2) write to json file.
+
+## write to MongoDB database
+
+Retrieve playing cinema movies (the specified pipeline will insert the data into MongoDB): 
 
 ```bash
+cd backend/kinoprogramm
 scrapy crawl kinoprogramm
 ```
 
@@ -55,6 +46,21 @@ Go to "Tools" -> "Shell" to write [mongodb queries](https://docs.mongodb.com/man
 ```shell
 db.kinos.distinct( "shows.title" )
 ```
+
+## write to json file
+
+You need Python 3.7.4 and [requirements.txt](kinoprogramm/requirements.txt).
+
+You can start the spider by just:
+
+```bash
+cd backend/kinoprogramm
+scrapy crawl kinoprogramm -o ../data/kinoprogramm.json
+```
+
+Data will be written to the file specified with the `-o` parameter.
+
+
 
 
 # Deployment
@@ -95,6 +101,7 @@ curl -u <API_KEY>: https://storage.scrapinghub.com/items/417389/1/6/0/contact
 
 After installing `requirements_tests.txt`, tests can be run by:
 
-```shell
+```bash
+cd backend/kinoprogramm
 python -m pytest tests/
 ```
