@@ -18,9 +18,7 @@ services:
       - 3300:3000
 
   backend:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile-api
+    build: ./backend
     container_name: backend
     ports:
       - 8001:8001
@@ -35,9 +33,7 @@ services:
       MONGODB_COLLECTION:  kinos
 
   scrapy:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile-scrapy
+    build: ./scrapy
     container_name: scrapy
     depends_on:
       - mongodb

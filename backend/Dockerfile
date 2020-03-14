@@ -6,7 +6,7 @@ RUN pip install --upgrade pip && \
     pip install --trusted-host pypi.python.org -r requirements.txt
 
 COPY main.py /app/
-COPY ./apis/ /app/apis/
+COPY apis /app/apis/
 
 RUN chmod 644 main.py
 
