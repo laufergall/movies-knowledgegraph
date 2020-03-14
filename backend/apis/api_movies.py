@@ -8,10 +8,11 @@ from .db_access import MongoDBConnector
 
 db_accessor = MongoDBConnector()
 
-search_parser = reqparse.RequestParser()
-search_parser.add_argument(name='contains',
-                           required=False,
-                           help='substr to be contained in the title')
+title_parser = reqparse.RequestParser()
+title_parser.add_argument(name='contains',
+                          default='',
+                          required=False,
+                          help='substr to be contained in the movie title')
 
 api = Namespace('movies',
                 description='Retrieve information about movies.')
@@ -20,13 +21,13 @@ api = Namespace('movies',
 @api.route('/titles')
 class Movies(Resource):
 
-    @api.expect(search_parser)
+    @api.expect(title_parser)
     def get(self):
         """
-        Retrieve movie titles in Berlin cinemas
+        Get movie titles in Berlin cinemas.
         """
 
-        args = search_parser.parse_args()
+        args = title_parser.parse_args()
 
         titles = db_accessor.read_distinct_movies(args['contains'])
         return titles
