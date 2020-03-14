@@ -2,9 +2,11 @@
 Classes and methods for accessing data in database
 """
 
-from pymongo import MongoClient
 import os
+import re
 from typing import List
+
+from pymongo import MongoClient
 
 
 class MongoDBConnector:
@@ -20,9 +22,19 @@ class MongoDBConnector:
         db = client[os.environ.get('MONGODB_DB')]
         self.collection = db[os.environ.get('MONGODB_COLLECTION')]
 
-    def read_distinct_movies(self) -> List[str]:
-        movies = self.collection.find({}).distinct('shows.title')
-        return movies
+    def read_distinct_movies(self, contains: str) -> List[str]:
+
+        rgx = re.compile(f'.*{contains}.*', re.IGNORECASE)
+        movies = self.collection.find({}, {'shows': {'$elemMatch': {'title': rgx}}, '_id': 0})
+
+        all_titles = list()
+        for movie in movies:
+            shows = movie.get('shows', [])
+            shows_titles = [show['title'] for show in shows]
+            all_titles.append(shows_titles)
+
+        all_titles_ = list(set(title for shows_titles in all_titles for title in shows_titles))
+        return all_titles_
 
     def read_distinct_cinemas(self) -> List[str]:
         cinemas = self.collection.find({}).distinct('name')
