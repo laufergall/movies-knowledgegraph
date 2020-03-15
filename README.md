@@ -54,13 +54,11 @@ You need Python 3.7.4 and [requirements.txt](kinoprogramm/requirements.txt).
 You can start the spider by just:
 
 ```bash
-cd backend/kinoprogramm
+cd scrapy/kinoprogramm
 scrapy crawl kinoprogramm -o ../data/kinoprogramm.json
 ```
 
-Data will be written to the file specified with the `-o` parameter.
-
-
+Data will be written to the file specified with the `-o` parameter. Data will also be written to the MongoDB database.
 
 
 # Deployment
@@ -69,7 +67,7 @@ To deploy to the [Scrapy Cloud](https://scrapinghub.com/scrapy-cloud):
 
 1. Sign up to [Scrapy Cloud](https://app.scrapinghub.com/). There is a free plan.
 2. Create a new project
-3. cd to `movies-knowledgegraph/kinoprogramm`
+3. cd to `movies-knowledgegraph/scrapy`
 4. Deploy by `pip install shub`, `shub login`, `shub deploy <PROJECT_ID>`
 
 Link to [Scrapinghub Support Center](https://support.scrapinghub.com/support/home).
@@ -102,6 +100,6 @@ curl -u <API_KEY>: https://storage.scrapinghub.com/items/417389/1/6/0/contact
 After installing `requirements_tests.txt`, tests can be run by:
 
 ```bash
-cd backend/kinoprogramm
+cd scrapy/kinoprogramm
 python -m pytest tests/
 ```
