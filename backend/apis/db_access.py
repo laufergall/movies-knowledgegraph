@@ -66,7 +66,7 @@ class MongoDBConnector:
         for show in cinema.get('shows', []):
             times = sorted([t for t in show['times']])
             show.update(
-                {'times': [t.strftime("%A, %d.%m.%Y, %H:%M:%S") for t in times]})
+                {'times': [t.strftime('%A, %d.%m.%Y, %H:%M') for t in times]})
             shows_.append(show)
         return shows_
 
@@ -106,7 +106,7 @@ class MongoDBConnector:
                 pass
             else:
                 show_times = sorted([t for t in show['times']])
-                show_times_ = [t.strftime("%A, %d.%m.%Y, %H:%M:%S") for t in show_times]
+                show_times_ = [t.strftime('%A, %d.%m.%Y, %H:%M') for t in show_times]
 
                 cinemamovie = CinemaMovie(
                     name=cinema['name'],

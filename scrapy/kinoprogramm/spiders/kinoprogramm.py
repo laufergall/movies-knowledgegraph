@@ -90,8 +90,12 @@ class KinoSpider(scrapy.Spider):
     def parse_cinema(self, response: scrapy.http.response.html.HtmlResponse) -> dict:
 
         titles = self.get_titles(response)
-        movies_times = [div.xpath('//table//td/text()').getall()
-                        for div in response.css('div.table-responsive-wrapper')]
+        movies_times = list()
+        for movie in response.xpath('//div[@class="table-responsive-wrapper"]'):
+            times = list()
+            for showtime in movie.xpath('.//tr'):
+                times += showtime.xpath('./td/text()').getall()
+            movies_times.append(times)
 
         cinema = Cinema(
             

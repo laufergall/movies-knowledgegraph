@@ -72,12 +72,12 @@ ITEM_PIPELINES = {
     'kinoprogramm.pipelines.MongoDBPipeline': 300,
 }
 
-MONGODB_HOST = os.environ.get('MONGODB_HOST')
-MONGODB_PORT = int(os.environ.get('MONGODB_PORT'))
-MONGODB_USERNAME = os.environ.get('MONGODB_USERNAME')
-MONGODB_PASSWORD = os.environ.get('MONGODB_PASSWORD')
-MONGODB_DB = os.environ.get('MONGODB_DB')
-MONGODB_COLLECTION = os.environ.get('MONGODB_COLLECTION')
+MONGODB_HOST = os.environ.get('MONGODB_HOST', '192.168.99.100')
+MONGODB_PORT = int(os.environ.get('MONGODB_PORT', 27017))
+MONGODB_USERNAME = os.environ.get('MONGODB_USERNAME', 'root')
+MONGODB_PASSWORD = os.environ.get('MONGODB_PASSWORD', '12345')
+MONGODB_DB = os.environ.get('MONGODB_DB', 'kinoprogramm')
+MONGODB_COLLECTION = os.environ.get('MONGODB_COLLECTION', 'kinos')
 
 
 # Enable and configure the AutoThrottle extension (disabled by default)
