@@ -47,7 +47,7 @@ db.kinos.distinct( "shows.title" )
 
 ## write to json file
 
-You need Python 3.7.4 and [requirements.txt](kinoprogramm/requirements.txt).
+You need Python 3.7.4 and [requirements.txt](scrapy/requirements.txt).
 
 You can start the spider by just:
 
