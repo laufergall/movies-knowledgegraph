@@ -1,20 +1,18 @@
 # This repo
 
-(ongoing work)
+:construction: *ongoing work* :construction: I am constructing a knowledge graph of movies shown in Berlin cinemas.
 
-I am constructing a knowledge graph of movies shown in Berlin cinemas.
 
-# Data 
+# Scraping cinema movies
 
 We retrieve currently showing movies from [Berlin.de](https://www.berlin.de/kino/_bin/azfilm.php) using [scrapy](https://docs.scrapy.org/en/latest/).
 
-# Retrieve cinema movies
+Start four containers:
 
-Start three containers:
-
-* our flask-restplus backend
+* a container where the scrapy job runs, and stops when finished.
 * a [MongoDB](https://www.mongodb.com/) database
 * the [Nosqlclient](https://github.com/nosqlclient/nosqlclient) (formerly mongoclient)
+* our Flask-RESTPlus backend
 
 ```bash
 docker-compose build
@@ -28,7 +26,7 @@ There are two alternatives for storing data: 1) write to MongoDB database, or 2)
 Retrieve playing cinema movies (the specified pipeline will insert the data into MongoDB): 
 
 ```bash
-cd backend/kinoprogramm
+cd scrapy/kinoprogramm
 scrapy crawl kinoprogramm
 ```
 
@@ -58,10 +56,9 @@ cd scrapy/kinoprogramm
 scrapy crawl kinoprogramm -o ../data/kinoprogramm.json
 ```
 
-Data will be written to the file specified with the `-o` parameter. Data will also be written to the MongoDB database.
+Data will be written to the file specified with the `-o` parameter. Data will also be written to the MongoDB database, unless the file `pipelines.py` is adapted.
 
-
-# Deployment
+## scrapy deployment
 
 To deploy to the [Scrapy Cloud](https://scrapinghub.com/scrapy-cloud):
 
@@ -95,9 +92,16 @@ Example retrieving contact from first cinema (item 0) of spyder 1 job 6 and proj
 curl -u <API_KEY>: https://storage.scrapinghub.com/items/417389/1/6/0/contact
 ```
 
+# Backend
+
+You can access the Swagger UI of Flask-RESTPlus backend under  `http://localhost:8001/`. 
+
+Here, you can use the different endpoints to retrieve data from the MongoDB database.
+
+
 # Tests
 
-After installing `requirements_tests.txt`, tests can be run by:
+After installing `requirements_tests.txt`, tests for scrapy can be run by:
 
 ```bash
 cd scrapy/kinoprogramm
