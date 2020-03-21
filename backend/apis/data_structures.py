@@ -12,11 +12,11 @@ from dataclasses_json import dataclass_json
 @dataclass
 class Address:
     """ A physical address """
-    street: str
-    postal_code: str
-    district: str
-    city: str
-    country: str
+    street: str = ''
+    postal_code: str = ''
+    district: str = ''
+    city: str = ''
+    country: str = ''
 
 
 @dataclass

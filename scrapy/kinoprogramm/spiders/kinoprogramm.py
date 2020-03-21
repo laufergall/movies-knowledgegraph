@@ -39,7 +39,12 @@ class KinoSpider(scrapy.Spider):
 
         selectors = response.xpath('//div[@class="controls"]/select/option')
 
-        hrefs = ['https://www.berlin.de/kino/_bin/kinodetail.php/' + sel.attrib['value']
+        # current movies:
+        # base_kinodetail_url = 'https://www.berlin.de/kino/_bin/kinodetail.php/'
+
+        # archive movies (2nd Nov 2019):
+        base_kinodetail_url = 'http://web.archive.org/web/20191102035415/https://www.berlin.de/kino/_bin/kinodetail.php/'
+        hrefs = [base_kinodetail_url + sel.attrib['value']
                  for sel in selectors if is_positiveinteger(sel.attrib['value'])]
 
         for href in hrefs:
@@ -97,7 +102,7 @@ class KinoSpider(scrapy.Spider):
                 times += showtime.xpath('./td/text()').getall()
             movies_times.append(times)
 
-        cinema = Cinema(name='TODO')
+        cinema = Cinema(name='TODO Task 1')
 
         self.logger.info(f'Scraped cinema: {cinema.name}')
 
