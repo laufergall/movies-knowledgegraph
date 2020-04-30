@@ -1,5 +1,5 @@
 """
-Definition of spyder to retrieve Cinema instances
+Definition of spider to retrieve Cinema instances
 """
 
 import logging

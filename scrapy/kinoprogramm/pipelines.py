@@ -42,6 +42,6 @@ class MongoDBPipeline(object):
                 raise DropItem(f'Missing {data}!')
 
         self.collection.insert(dict(item))
-        self.logger.info(f'item {item["name"]} from spyder {spider.name} added to MongoDB')
+        self.logger.info(f'item {item["name"]} from spider {spider.name} added to MongoDB')
 
         return item
