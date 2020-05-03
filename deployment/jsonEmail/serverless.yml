@@ -1,0 +1,47 @@
+
+service: jsonemail
+
+provider:
+  name: aws
+  runtime: python3.7
+  region: eu-central-1
+
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "s3:ListBucket"
+      Resource:
+        Fn::Join:
+        - ""
+        - - "arn:aws:s3:::kinoprogramm-scraper"
+          - "/*"
+    - Effect: "Allow"
+      Action:
+        - "s3:GetObject"
+      Resource:
+        Fn::Join:
+          - ""
+          - - "arn:aws:s3:::kinoprogramm-scraper"
+            - "/*"
+    - Effect: "Allow"
+      Action:
+        - "ses:SendRawEmail"
+      Resource:
+        - "*"
+      Condition:
+        StringEquals:
+          ses:FromAddress:
+            - "laufergall@gamil.com"
+
+functions:
+  email:
+    handler: handler.send_email_with_json
+    timeout: 300
+    events:
+      - s3:
+          bucket: kinoprogramm-scraper
+          existing: true
+          event: s3:ObjectCreated:*
+          rules:
+          - prefix: berlin-de/
+          - suffix: .json.gz

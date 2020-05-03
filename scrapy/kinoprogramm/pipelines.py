@@ -99,7 +99,7 @@ class S3Pipeline(object):
             self.s3_client.put_object(
                 Body=gz_body.getvalue(),
                 ContentEncoding='gzip',
-                Bucket=self.bucket, Key=full_path)
+                Bucket=self.bucket, Key=f'{path}/{filename}')
 
         except Exception as e:
             msg = f'Exception writing parsed jobs to S3: /{full_path}'

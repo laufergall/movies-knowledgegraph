@@ -58,11 +58,15 @@ scrapy crawl kinoprogramm -o ../data/kinoprogramm.json
 
 Data will be written to the file specified with the `-o` parameter. Data will also be written to the MongoDB database, unless the file `pipelines.py` is adapted.
 
-## scrapy deployment
+# Scrapy deployment
+
+We present two alternatives: 1) deploy to the Scrapy Cloud, or 2) deploy to AWS
+
+## Scrapy Cloud
 
 To deploy to the [Scrapy Cloud](https://scrapinghub.com/scrapy-cloud):
 
-1. Sign up to [Scrapy Cloud](https://app.scrapinghub.com/). There is a free plan.
+1. Sign up to [Scrapy Cloud](https://app.scrapinghub.com/). There is a [free plan](https://scrapinghub.com/scrapy-cloud#pricing) (but scraping jobs cannot be scheduled).
 2. Create a new project
 3. cd to `movies-knowledgegraph/scrapy`
 4. Deploy by `pip install shub`, `shub login`, `shub deploy <PROJECT_ID>`
@@ -91,6 +95,13 @@ Example retrieving contact from first cinema (item 0) of spider 1 job 6 and proj
 ```bash
 curl -u <API_KEY>: https://storage.scrapinghub.com/items/417389/1/6/0/contact
 ```
+
+## AWS
+
+We push our scrapy Docker image to AWS ECR and start (manually, or event-based) the scraping task with AWS Fargate, which writes resulting jsons to a bucket in AWS S3.
+
+See [deployment](deployment/README.md).
+
 
 # Backend
 

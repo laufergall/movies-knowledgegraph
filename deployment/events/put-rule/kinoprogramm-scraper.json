@@ -1,0 +1,6 @@
+{
+  "Name": "kinoprogrammScraperRule",
+  "Description": "A rule for running the Kinoprogramm scraper.",
+  "ScheduleExpression": "cron(30 16 * * ? *)",
+  "State": "DISABLED"
+}
