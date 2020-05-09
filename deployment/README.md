@@ -7,7 +7,7 @@ Assuming we have gone through all steps of the AWS Deployment Walkthrough (see b
 aws ecs run-task --cli-input-json file://deployment/ecs/run-task/kinoprogramm-scraper.json
 ```
 
-When the task is completed, json files should have been written to S3. See [athena queries](deployment/athena/README.md) for accessing the scraped data.
+When the task is completed, json files should have been written to S3. See [athena queries](athena/README.md) for accessing the scraped data.
 
 Alternatively, for debugging purposes, the scraping job can be triggered to be run locally, and, by providing the AWS credentials, the scraped jsons will be written to S3.
 
@@ -45,7 +45,7 @@ No need to update the event rule or event target. The next event will trigger th
 aws ecs run-task --cli-input-json file://deployment/ecs/run-task/kinoprogramm-scraper.json
 ```
 
-When the task is completed, json files should have been written to S3. See [athena queries](deployment/athena/README.md) for accessing the scraped data.
+When the task is completed, json files should have been written to S3. See [athena queries](athena/README.md) for accessing the scraped data.
 
 
 # AWS Deployment Walkthrough
@@ -219,7 +219,7 @@ aws ecs run-task --cli-input-json file://deployment/ecs/run-task/kinoprogramm-sc
 aws ecs list-tasks --cluster scraperCluster
 ```
 
-When the task is completed, json files should have been written to S3. See [athena queries](deployment/athena/README.md) for accessing the scraped data.
+When the task is completed, json files should have been written to S3. See [athena queries](athena/README.md) for accessing the scraped data.
 
 
 # Lambda function to send email when json lands in S3
