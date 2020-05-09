@@ -47,7 +47,7 @@ db.kinos.distinct( "shows.title" )
 
 ## write to json file
 
-You need Python 3.7.4 and [requirements.txt](kinoprogramm/requirements.txt).
+You need Python 3.6+ and [requirements.txt](scrapy/requirements.txt).
 
 You can start the spider by just:
 
@@ -58,11 +58,15 @@ scrapy crawl kinoprogramm -o ../data/kinoprogramm.json
 
 Data will be written to the file specified with the `-o` parameter. Data will also be written to the MongoDB database, unless the file `pipelines.py` is adapted.
 
-## scrapy deployment
+# Scrapy deployment
+
+We present two alternatives: 1) deploy to the Scrapy Cloud, or 2) deploy to AWS
+
+## Scrapy Cloud
 
 To deploy to the [Scrapy Cloud](https://scrapinghub.com/scrapy-cloud):
 
-1. Sign up to [Scrapy Cloud](https://app.scrapinghub.com/). There is a free plan.
+1. Sign up to [Scrapy Cloud](https://app.scrapinghub.com/). There is a [free plan](https://scrapinghub.com/scrapy-cloud#pricing) (but scraping jobs cannot be scheduled).
 2. Create a new project
 3. cd to `movies-knowledgegraph/scrapy`
 4. Deploy by `pip install shub`, `shub login`, `shub deploy <PROJECT_ID>`
@@ -71,11 +75,11 @@ Link to [Scrapinghub Support Center](https://support.scrapinghub.com/support/hom
 
 Link to [Scrapinghub API Reference](https://doc.scrapinghub.com/scrapy-cloud.html?_ga=2.243489287.325994476.1574619401-1607314863.1570297387).
 
-Once deployed, the spyder can run by:
+Once deployed, the spider can run by:
 
 1. Retrieve the [API key](https://app.scrapinghub.com/account/apikey)
 
-2. Run spyder by:
+2. Run spider by:
 
 ```bash
 curl -u <API_KEY>: https://app.scrapinghub.com/api/run.json -d project=<PROJECT_ID> -d spider=kinoprogramm
@@ -87,10 +91,17 @@ curl -u <API_KEY>: https://app.scrapinghub.com/api/run.json -d project=<PROJECT_
 curl -u <API_KEY>: https://storage.scrapinghub.com/items/:<PROJECT_ID>[/<SPIDER_ID>][/<JOB_ID>][/<ITEM_NUMBER>][/<FIELD_NAME>]
 ```
 
-Example retrieving contact from first cinema (item 0) of spyder 1 job 6 and project id 417389:
+Example retrieving contact from first cinema (item 0) of spider 1 job 6 and project id 417389:
 ```bash
 curl -u <API_KEY>: https://storage.scrapinghub.com/items/417389/1/6/0/contact
 ```
+
+## AWS
+
+We push our scrapy Docker image to AWS ECR and start (manually, or event-based) the scraping task with AWS Fargate, which writes resulting jsons to a bucket in AWS S3.
+
+See [deployment](deployment/README.md).
+
 
 # Backend
 

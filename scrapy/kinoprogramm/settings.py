@@ -68,7 +68,9 @@ ROBOTSTXT_OBEY = True
 #ITEM_PIPELINES = {
 #    'kinoprogramm.pipelines.KinoprogrammPipeline': 300,
 #}
+
 ITEM_PIPELINES = {
+    'kinoprogramm.pipelines.S3Pipeline': 300,
     'kinoprogramm.pipelines.MongoDBPipeline': 300,
 }
 

@@ -1,0 +1,26 @@
+{
+  "Rule": "kinoprogrammScraperRule",
+  "Targets": [
+    {
+      "Id": "kinoprogramm-scraper",
+      "Arn": "arn:aws:ecs:eu-central-1:287094319766:cluster/scraperCluster",
+      "RoleArn": "arn:aws:iam::287094319766:role/ecsEventsRole",
+      "EcsParameters": {
+        "LaunchType": "FARGATE",
+        "TaskDefinitionArn": "arn:aws:ecs:eu-central-1:287094319766:task-definition/KinoprogrammScraper",
+        "TaskCount": 1,
+        "NetworkConfiguration": {
+          "awsvpcConfiguration": {
+            "AssignPublicIp": "ENABLED",
+            "SecurityGroups": [
+              "sg-51908630"
+            ],
+            "Subnets": [
+              "subnet-df8c77b5"
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

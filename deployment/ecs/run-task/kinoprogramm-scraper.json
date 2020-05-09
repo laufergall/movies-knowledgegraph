@@ -1,0 +1,18 @@
+{
+  "launchType": "FARGATE",
+  "taskDefinition": "arn:aws:ecs:eu-central-1:287094319766:task-definition/KinoprogrammScraper",
+  "platformVersion": "LATEST",
+  "cluster": "arn:aws:ecs:eu-central-1:287094319766:cluster/scraperCluster",
+  "count": 1,
+  "networkConfiguration": {
+    "awsvpcConfiguration": {
+      "subnets": [
+        "subnet-df8c77b5"
+      ],
+      "securityGroups": [
+        "sg-51908630"
+      ],
+      "assignPublicIp": "ENABLED"
+    }
+  }
+}
