@@ -1,4 +1,22 @@
 
+# Trigger the scraping job
+
+Assuming we have gone through all steps of the AWS Deployment Walkthrough (see below). If we want to start the scraping job ourselves, instead of through the scheduled event, we just:
+
+```bash
+aws ecs run-task --cli-input-json file://deployment/ecs/run-task/kinoprogramm-scraper.json
+```
+
+When the task is completed, json files should have been written to S3. See [athena queries](/athena/README.md) for accessing the scraped data.
+
+Alternatively, for debugging purposes, the scraping job can be triggered to be run locally, and, by providing the AWS credentials, the scraped jsons will be written to S3.
+
+Assuming you have built the `kinoprogramm-scraper:latest` image:
+
+```bash
+docker run -e AWS_ACCESS_KEY_ID=<your AWS access key ID> -e AWS_SECRET_ACCESS_KEY=<your AWS secret access key> kinoprogramm-scraper:latest
+```
+
 # New deployment
 
 To start over with the complete deployment in AWS, see next section (AWS Deployment Walkthrough).
@@ -27,7 +45,7 @@ No need to update the event rule or event target. The next event will trigger th
 aws ecs run-task --cli-input-json file://deployment/ecs/run-task/kinoprogramm-scraper.json
 ```
 
-When the task is completed, json files should have been written to S3.
+When the task is completed, json files should have been written to S3. See [athena queries](/athena/README.md) for accessing the scraped data.
 
 
 # AWS Deployment Walkthrough
@@ -201,7 +219,7 @@ aws ecs run-task --cli-input-json file://deployment/ecs/run-task/kinoprogramm-sc
 aws ecs list-tasks --cluster scraperCluster
 ```
 
-When the task is completed, json files should have been written to S3.
+When the task is completed, json files should have been written to S3. See [athena queries](/athena/README.md) for accessing the scraped data.
 
 
 # Lambda function to send email when json lands in S3
